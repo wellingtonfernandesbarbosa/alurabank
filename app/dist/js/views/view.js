@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 import { inspetor } from "../decorators/inspetor.js";
 import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 export class View {
-    constructor(seletor, escapar) {
+    constructor(seletor) {
         const elemento = document.querySelector(seletor);
         if (elemento) {
             this.elemento = elemento;
@@ -15,19 +15,13 @@ export class View {
         else {
             throw Error(`O seletor ${seletor} não foi encontrado no DOM. Virifique a existência do elemento.`);
         }
-        if (escapar) {
-            this.escapar = escapar;
-        }
     }
     update(model) {
         let template = this.template(model);
-        if (this.escapar) {
-            template = template.replace(/<script>[\s\S]*?<\/script>/, '');
-        }
         this.elemento.innerHTML = template;
     }
 }
 __decorate([
-    inspetor(),
+    inspetor,
     logarTempoDeExecucao(true)
 ], View.prototype, "update", null);
