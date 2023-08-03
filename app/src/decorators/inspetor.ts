@@ -4,6 +4,7 @@ export function inspetor(
     descriptor: PropertyDescriptor
 ) {
     const metodoOriginal = descriptor.value;
+    
     descriptor.value = function(...args: any){
         console.log(`--- Método ${propertyKey}`);
         console.log(`------ parâmetros ${JSON.stringify(args)}`)
@@ -11,5 +12,6 @@ export function inspetor(
         console.log(`--------- retorno: ${JSON.stringify(retorno)}`);
         return retorno;
     }
-        return descriptor;
+    
+    return descriptor;
 }
