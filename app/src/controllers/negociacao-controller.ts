@@ -4,6 +4,7 @@ import { logarTempoDeExecucao } from "../decorators/logar-tempo-de-execucao.js";
 import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
+import { NegociacoesService } from "../services/negociacoes-service.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacaoView } from "../views/negociacoes-view.js";
 
@@ -21,6 +22,7 @@ export class NegociacaoController {
     private negociacoes = new Negociacoes();
     private negociacoesView = new NegociacaoView('#negociacoesView');
     private mensagemView = new MensagemView('#mensagemView');
+    private negociacaoService = new NegociacoesService;
     
     constructor(){
         this.negociacoesView.update(this.negociacoes);
@@ -29,9 +31,6 @@ export class NegociacaoController {
     @inspetor
     @logarTempoDeExecucao()
     public adiciona(): void {
-        /* 
-            Maluco, tá ligado nisso?
-        */
         const negociacao = Negociacao.criaNegociacao(
             this.inputData.value,
             this.inputQuantidade.value,
@@ -55,6 +54,17 @@ export class NegociacaoController {
     private atualizaView(): void {
         this.negociacoesView.update(this.negociacoes);
         this.mensagemView.update('Negociação adicionada com sucesso!');
+    }
+
+    public importaDados(): void {
+        this.negociacaoService.obterNegociacoesDoDia()
+            .then(negociacoesDeHoje => {
+                for(let negociacao of negociacoesDeHoje) {
+                    this.negociacoes.adiciona(negociacao);
+                }
+            
+            this.negociacoesView.update(this.negociacoes)
+        })
     }
 
     private diaUtil(data: Date): boolean {
