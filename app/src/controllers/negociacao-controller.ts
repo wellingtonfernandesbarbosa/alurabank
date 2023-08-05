@@ -5,6 +5,7 @@ import { DiasDaSemana } from "../enums/dias-da-semana.js";
 import { Negociacao } from "../models/negociacao.js";
 import { Negociacoes } from "../models/negociacoes.js";
 import { NegociacoesService } from "../services/negociacoes-service.js";
+import { imprimir } from "../utils/imprimir.js";
 import { MensagemView } from "../views/mensagem-view.js";
 import { NegociacaoView } from "../views/negociacoes-view.js";
 
@@ -40,6 +41,9 @@ export class NegociacaoController {
             return this.mensagemView.update('Negociações só podem ser feitas em dias úteis!');
         }
         this.negociacoes.adiciona(negociacao);
+     
+        imprimir(negociacao, this.negociacoes);
+
         this.atualizaView();
         this.limparFormulario();
     }
