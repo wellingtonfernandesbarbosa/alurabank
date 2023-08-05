@@ -39,3 +39,4 @@ export class NegociacaoView extends View {
 __decorate([
     escapar
 ], NegociacaoView.prototype, "template", null);
+//# sourceMappingURL=negociacoes-view.js.map
